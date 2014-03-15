@@ -1,14 +1,17 @@
-package org.openurp.service.attendance.device.web
+package org.openurp.ws.teach.attendance.app.web
 
 import org.beangle.commons.lang.Numbers
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.service.attendance.device.service.DeviceRegistry
-import org.openurp.service.attendance.device.util.{JsonBuilder, Render}
-import org.openurp.service.attendance.device.util.DateFormatUtils.{toDate, toTime}
-import javax.servlet.{ServletRequest, ServletResponse}
+import org.openurp.ws.teach.attendance.app.service.DeviceRegistry
+import org.openurp.ws.teach.attendance.app.util.{ JsonBuilder, Render }
+import org.openurp.ws.teach.attendance.app.util.DateFormatUtils.{ toDate, toTime }
+import javax.servlet.{ ServletRequest, ServletResponse }
 import javax.servlet.http.HttpServlet
-
+import java.util.Date
+/**
+ * 同步服务器心跳
+ */
 class SyncTimeServlet extends HttpServlet with Logging {
 
   var executor: JdbcExecutor = _
@@ -24,7 +27,7 @@ class SyncTimeServlet extends HttpServlet with Logging {
     } else {
       deviceRegistry.get(devid) match {
         case Some(d) => {
-          if (executor.update("update DEVICE_JS set qdsj=sysdate where devid=?", devid) < 1) {
+          if (executor.update("update DEVICE_JS set qdsj=? where devid=?", new Date(), devid) < 1) {
             deviceRegistry.unregister(devid)
             retmsg = "无法连接，没有对应的教室信息";
           } else {

@@ -15,7 +15,8 @@
   <properties>
     <bundle.symbolicName>org.openurp.ws.teach.parent</bundle.symbolicName>
     <bundle.namespace>org.openurp.ws.teach.parent</bundle.namespace>
-    <commons.version>4.0.3-SNAPSHOT</commons.version>
+    <beanglecommons.version>4.0.3-SNAPSHOT</beanglecommons.version>
+    <beanglespring.version>4.0.2-SNAPSHOT</beanglespring.version>
   </properties>
 
   <modules>
@@ -26,12 +27,17 @@
     <dependency>
       <groupId>org.beangle.data</groupId>
       <artifactId>beangle-data-jdbc</artifactId>
-      <version>${commons.version}</version>
+      <version>${beanglecommons.version}</version>
     </dependency>
     <dependency>
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-web</artifactId>
-      <version>${commons.version}</version>
+      <version>${beanglecommons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.beangle.spring</groupId>
+      <artifactId>beangle-spring-context</artifactId>
+      <version>${beanglespring.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
