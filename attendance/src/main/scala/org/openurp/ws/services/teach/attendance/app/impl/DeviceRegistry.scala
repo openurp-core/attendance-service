@@ -1,11 +1,10 @@
-package org.openurp.ws.services.teach.attendance.app.service
+package org.openurp.ws.services.teach.attendance.app.impl
 
 import org.beangle.commons.bean.Initializing
 import org.beangle.commons.cache.{ Cache, CacheManager }
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.services.teach.attendance.app.model.Device
-import java.util.Date
 import org.beangle.commons.logging.Logging
+import java.util.Date
 /**
  * 设备注册表
  */

@@ -1,4 +1,4 @@
-package org.openurp.ws.services.teach.attendance.app.model
+package org.openurp.ws.services.teach.attendance.app.impl
 
 import java.util.Date
 import org.beangle.commons.lang.Objects
