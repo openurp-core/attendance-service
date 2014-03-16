@@ -1,12 +1,12 @@
-package org.openurp.ws.teach.attendance.app
+package org.openurp.ws.services.teach.attendance.app
 
 import org.beangle.commons.inject.bind.AbstractBindModule
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.teach.attendance.app.web.SyncTimeServlet
+import org.openurp.ws.services.teach.attendance.app.web.SyncTimeServlet
 import org.beangle.commons.jndi.JndiObjectFactory
-import org.openurp.ws.teach.attendance.app.service.DeviceRegistry
+import org.openurp.ws.services.teach.attendance.app.service.DeviceRegistry
 import org.beangle.commons.cache.concurrent.ConcurrentMapCacheManager
-import org.openurp.ws.teach.attendance.app.web.DeviceServlet
+import org.openurp.ws.services.teach.attendance.app.web.DeviceServlet
 
 class DefaultModule extends AbstractBindModule {
 

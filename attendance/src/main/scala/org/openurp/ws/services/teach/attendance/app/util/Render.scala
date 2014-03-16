@@ -1,4 +1,4 @@
-package org.openurp.ws.teach.attendance.app.util
+package org.openurp.ws.services.teach.attendance.app.util
 
 import com.google.gson.JsonObject
 import javax.servlet.ServletResponse

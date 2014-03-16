@@ -1,4 +1,4 @@
-package org.openurp.ws.teach.attendance.app.web
+package org.openurp.ws.services.teach.attendance.app.web
 
 import javax.servlet.ServletContext
 import javax.servlet.ServletException

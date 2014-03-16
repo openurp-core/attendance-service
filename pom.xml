@@ -6,15 +6,15 @@
     <artifactId>beangle-scala</artifactId>
     <version>12</version>
   </parent>
-  <groupId>org.openurp.ws.teach</groupId>
-  <artifactId>openurp-ws-teach-parent</artifactId>
+  <groupId>org.openurp.ws.services.teach</groupId>
+  <artifactId>openurp-ws-services-teach-parent</artifactId>
   <packaging>pom</packaging>
   <version>0.0.1</version>
   <name>OpenURP Teach Service Parent</name>
   
   <properties>
-    <bundle.symbolicName>org.openurp.ws.teach.parent</bundle.symbolicName>
-    <bundle.namespace>org.openurp.ws.teach.parent</bundle.namespace>
+    <bundle.symbolicName>org.openurp.ws.services.teach.parent</bundle.symbolicName>
+    <bundle.namespace>org.openurp.ws.services.teach.parent</bundle.namespace>
     <beanglecommons.version>4.0.3-SNAPSHOT</beanglecommons.version>
     <beanglespring.version>4.0.2-SNAPSHOT</beanglespring.version>
   </properties>

@@ -1,4 +1,4 @@
-package org.openurp.ws.teach.attendance.app.util
+package org.openurp.ws.services.teach.attendance.app.util
 
 import java.text.SimpleDateFormat
 import java.util.Date

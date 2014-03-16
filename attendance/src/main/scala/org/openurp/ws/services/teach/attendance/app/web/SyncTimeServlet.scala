@@ -1,11 +1,11 @@
-package org.openurp.ws.teach.attendance.app.web
+package org.openurp.ws.services.teach.attendance.app.web
 
 import org.beangle.commons.lang.Numbers
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.teach.attendance.app.service.DeviceRegistry
-import org.openurp.ws.teach.attendance.app.util.{ JsonBuilder, Render }
-import org.openurp.ws.teach.attendance.app.util.DateFormatUtils.{ toDate, toTime }
+import org.openurp.ws.services.teach.attendance.app.service.DeviceRegistry
+import org.openurp.ws.services.teach.attendance.app.util.{ JsonBuilder, Render }
+import org.openurp.ws.services.teach.attendance.app.util.DateFormatUtils.{ toDate, toTime }
 import javax.servlet.{ ServletRequest, ServletResponse }
 import javax.servlet.http.HttpServlet
 import java.util.Date

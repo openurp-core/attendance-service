@@ -2,17 +2,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.openurp.ws.teach</groupId>
-    <artifactId>openurp-ws-teach-parent</artifactId>
+    <groupId>org.openurp.ws.services.teach</groupId>
+    <artifactId>openurp-ws-services-teach-parent</artifactId>
     <version>0.0.1</version>
   </parent>
-  <artifactId>openurp-ws-teach-attendance</artifactId>
+  <artifactId>openurp-ws-services-teach-attendance</artifactId>
   <packaging>war</packaging>
   <name>OpenURP Teach Attendance Service</name>
   
   <properties>
-    <bundle.symbolicName>org.openurp.ws.teach.attendance</bundle.symbolicName>
-    <bundle.namespace>org.openurp.ws.teach.attendance</bundle.namespace>
+    <bundle.symbolicName>org.openurp.ws.services.teach.attendance</bundle.symbolicName>
+    <bundle.namespace>org.openurp.ws.services.teach.attendance</bundle.namespace>
   </properties>
   
   <dependencies>

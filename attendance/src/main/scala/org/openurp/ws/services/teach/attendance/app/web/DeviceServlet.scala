@@ -1,14 +1,14 @@
-package org.openurp.ws.teach.attendance.app.web
+package org.openurp.ws.services.teach.attendance.app.web
 
 import javax.servlet.http.HttpServlet
 import org.beangle.commons.logging.Logging
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
-import org.openurp.ws.teach.attendance.app.service.DeviceRegistry
+import org.openurp.ws.services.teach.attendance.app.service.DeviceRegistry
 import com.google.gson.JsonObject
 import com.google.gson.JsonArray
-import org.openurp.ws.teach.attendance.app.util.DateFormatUtils.toDateTime
-import org.openurp.ws.teach.attendance.app.util.Render
+import org.openurp.ws.services.teach.attendance.app.util.DateFormatUtils.toDateTime
+import org.openurp.ws.services.teach.attendance.app.util.Render
 
 class DeviceServlet extends HttpServlet with Logging {
 
