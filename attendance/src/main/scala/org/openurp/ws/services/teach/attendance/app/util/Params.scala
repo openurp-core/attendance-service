@@ -1,14 +1,13 @@
 package org.openurp.ws.services.teach.attendance.app.util
 
 import java.{ util => ju }
-import java.util.Date
 import org.beangle.commons.conversion.converter.StringConverterFactory
 import org.beangle.commons.conversion.impl.DefaultConversion
 import org.beangle.commons.lang.Numbers
 import org.beangle.commons.lang.Strings.isEmpty
 import javax.servlet.ServletRequest
 import org.beangle.commons.conversion.Conversion
-import java.sql.Time
+import java.sql.{ Time, Date }
 
 final object Params {
   class ParamOption() {
@@ -23,11 +22,11 @@ final object Params {
       optional ++= names
       this
     }
-    def get(req: ServletRequest, validators: Map[String, Transformer]): Result = {
-      validate(req.getParameterMap, this, validators)
+    def get(req: ServletRequest, formers: Map[String, Transformer]): Result = {
+      validate(req.getParameterMap, this, formers)
     }
-    def get(params: ju.Map[String, Array[String]], validators: Map[String, Transformer]): Result = {
-      validate(params, this, validators)
+    def get(params: ju.Map[String, Array[String]], formers: Map[String, Transformer]): Result = {
+      validate(params, this, formers)
     }
   }
 
@@ -43,7 +42,7 @@ final object Params {
     option
   }
 
-  def validate(params: ju.Map[String, Array[String]], option: ParamOption, validators: Map[String, Transformer]): Result = {
+  def validate(params: ju.Map[String, Array[String]], option: ParamOption, formers: Map[String, Transformer]): Result = {
     var result = 0
     val msg = new collection.mutable.HashMap[String, String]
     val datas = new collection.mutable.HashMap[String, Any]
@@ -66,7 +65,7 @@ final object Params {
     datas.foreach {
       case (name, values) =>
         val value = values.asInstanceOf[Array[String]]
-        validators.get(name) match {
+        formers.get(name) match {
           case Some(v) =>
             if (value.length == 1) {
               val tuple = v.transform(value(0))
@@ -103,6 +102,7 @@ final object Params {
 object Transformers {
   val PositiveInteger = new IntegerTransformer
   val Date = new ConverterTransformer(classOf[Date], DefaultConversion.Instance, "错误的日期格式")
+  val DateTime = new ConverterTransformer(classOf[ju.Date], DefaultConversion.Instance, "错误的日期时间格式")
   val Time = new ConverterTransformer(classOf[Time], DefaultConversion.Instance, "错误的时间格式")
 }
 
@@ -156,6 +156,6 @@ final class Result(val failCount: Int, val msg: collection.Map[String, String], 
   def get(name: String): Option[Any] = datas.get(name)
 
   @inline
-  def good: Boolean = failCount == 0
+  def ok: Boolean = failCount == 0
 
 }

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-scala</artifactId>
-    <version>12</version>
+    <version>13-SNAPSHOT</version>
   </parent>
   <groupId>org.openurp.ws.services.teach</groupId>
   <artifactId>openurp-ws-services-teach-parent</artifactId>

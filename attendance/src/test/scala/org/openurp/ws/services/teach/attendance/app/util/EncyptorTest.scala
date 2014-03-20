@@ -4,25 +4,25 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSpec
 import javax.crypto.BadPaddingException
 
-/**
- * FIXME more testing
- */
 @RunWith(classOf[JUnitRunner])
 class EncyptorTest extends FunSpec {
-
+  val key = "abcd1234"
   describe("Encyptor") {
     it("encrypt") {
-      val str2 = new DesEncryptor("abcd1234").encrypt("2014004")
+      val str1 = new DesEncryptor(key).encrypt("2010141139")
+      val str2 = new DesEncryptor(key).encrypt("20140320")
+      val str3 = new DesEncryptor(key).encrypt("130000")
+      println("&cardphyid=" + str1 + "&signindate=" + str2 + "&signintime=" + str3)
     }
 
     it("decrypt") {
       try {
-        val str1 = new DesDecryptor("abcd1234").decrypt("e0ab7c54677385a8")
+        val str1 = new DesDecryptor(key).decrypt("e0ab7c54677385a8")
         this.fail("shouldn't decrypt success")
       } catch {
         case e: BadPaddingException =>
       }
-      val str1 = new DesDecryptor("abcd1234").decrypt("3aaec16085006460")
+      val str1 = new DesDecryptor(key).decrypt("3aaec16085006460")
     }
   }
 }

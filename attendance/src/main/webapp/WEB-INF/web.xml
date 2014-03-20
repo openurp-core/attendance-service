@@ -2,10 +2,10 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" 
 	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  
-			                 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0" metadata-complete="true">
-  <absolute-ordering/>
+			                 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0" 
+			                 metadata-complete="true">
+   <absolute-ordering/>
 
-  <!--设置字符集-->
   <filter>
     <filter-name>characterEncoding</filter-name>
     <filter-class>org.beangle.commons.web.filter.CharacterEncodingFilter</filter-class>
@@ -21,7 +21,7 @@
   </listener>
   
   <servlet>
-    <servlet-name>app.synctime</servlet-name>
+    <servlet-name>app.sync</servlet-name>
     <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
   </servlet>
 
@@ -29,14 +29,83 @@
     <servlet-name>app.device</servlet-name>
     <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>app.signin</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
   
+  <servlet>
+    <servlet-name>app.upload</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>app.coursetable</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>app.activity</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>app.detail</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>app.rate</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>app.notice</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+
   <servlet-mapping>
-    <servlet-name>app.synctime</servlet-name>
+    <servlet-name>app.sync</servlet-name>
     <url-pattern>/app/synctime</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>app.device</servlet-name>
     <url-pattern>/app/device</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.signin</servlet-name>
+    <url-pattern>/app/signin</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>app.activity</servlet-name>
+    <url-pattern>/app/currcourseinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.coursetable</servlet-name>
+    <url-pattern>/app/courseinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.upload</servlet-name>
+    <url-pattern>/app/dataupload</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.detail</servlet-name>
+    <url-pattern>/app/signindetail</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.rate</servlet-name>
+    <url-pattern>/app/attrate</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.notice</servlet-name>
+    <url-pattern>/app/scrollingmsg</url-pattern>
   </servlet-mapping>
 </web-app>

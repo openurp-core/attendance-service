@@ -1,21 +1,32 @@
 package org.openurp.ws.services.teach.attendance.app
 
 import org.beangle.commons.inject.bind.AbstractBindModule
-import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.services.teach.attendance.app.web.SyncTimeServlet
 import org.beangle.commons.jndi.JndiObjectFactory
-import org.openurp.ws.services.teach.attendance.app.impl.DeviceRegistry
-import org.beangle.commons.cache.concurrent.ConcurrentMapCacheManager
-import org.openurp.ws.services.teach.attendance.app.web.DeviceServlet
+import org.beangle.data.jdbc.query.JdbcExecutor
+import org.openurp.ws.services.teach.attendance.app.domain.AttendTypePolicy
+import org.openurp.ws.services.teach.attendance.app.impl.{ActivityService, AppConfig, BaseDataService, DeviceRegistry, EhcacheManager, ShardDaemon, SigninService}
+import org.openurp.ws.services.teach.attendance.app.web.{ActivityServlet, CourseTableServlet, DetailServlet, DeviceServlet, NoticeServlet, RateServlet, SigninServlet, SyncServlet, UploadServlet}
 
 class DefaultModule extends AbstractBindModule {
 
   protected def doBinding() {
-    bind("app.synctime", classOf[SyncTimeServlet])
+    bind("app.sync", classOf[SyncServlet])
     bind("app.device", classOf[DeviceServlet])
+    bind("app.signin", classOf[SigninServlet])
+    bind("app.coursetable", classOf[CourseTableServlet])
+    bind("app.activity", classOf[ActivityServlet])
+    bind("app.upload", classOf[UploadServlet])
+    bind("app.rate", classOf[RateServlet])
+    bind("app.detail", classOf[DetailServlet])
+    bind("app.notice", classOf[NoticeServlet])
+
     bind("dataSource", classOf[JndiObjectFactory]).property("jndiName", "jdbc/teach").property("resourceRef", "true")
-    bind(classOf[JdbcExecutor]).constructor(ref("dataSource"))
+    bind(classOf[JdbcExecutor]).constructor(ref("dataSource")).property("showSql", "true")
     bind(classOf[DeviceRegistry])
-    bind(classOf[ConcurrentMapCacheManager])
+    bind(classOf[EhcacheManager])
+    bind(classOf[ShardDaemon]).lazyInit(false)
+    bind(classOf[AttendTypePolicy])
+    bind(classOf[ActivityService],classOf[SigninService])
+    bind(classOf[AppConfig], classOf[BaseDataService])
   }
 }
