@@ -64,6 +64,11 @@
     <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>app.importer</servlet-name>
+    <servlet-class>org.beangle.commons.web.servlet.DelegatingServletProxy</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>app.sync</servlet-name>
     <url-pattern>/app/synctime</url-pattern>
@@ -107,5 +112,10 @@
   <servlet-mapping>
     <servlet-name>app.notice</servlet-name>
     <url-pattern>/app/scrollingmsg</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>app.importer</servlet-name>
+    <url-pattern>/app/importer</url-pattern>
   </servlet-mapping>
 </web-app>

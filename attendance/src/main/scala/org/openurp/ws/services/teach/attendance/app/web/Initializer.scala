@@ -22,7 +22,8 @@ class Initializer extends org.beangle.commons.web.init.Initializer {
     sc.addServlet("app.upload", classOf[DelegatingServletProxy]).addMapping("/app/dataupload")
     sc.addServlet("app.detail", classOf[DelegatingServletProxy]).addMapping("/app/signindetail")
     sc.addServlet("app.notice", classOf[DelegatingServletProxy]).addMapping("/app/scrollingmsg")
-
+    sc.addServlet("app.importer", classOf[DelegatingServletProxy]).addMapping("/app/importer")
+    
     sc.addFilter("characterEncoding", new CharacterEncodingFilter()).addMappingForUrlPatterns(
       EnumSet.of(REQUEST), true, "/*");
 

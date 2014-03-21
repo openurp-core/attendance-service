@@ -5,11 +5,11 @@ import org.openurp.ws.services.teach.attendance.app.impl.SigninService
 import org.openurp.ws.services.teach.attendance.app.util.{ JsonBuilder, Params }
 import org.openurp.ws.services.teach.attendance.app.util.Consts.{ DeviceId, Rule }
 import org.openurp.ws.services.teach.attendance.app.util.Render.render
-
 import com.google.gson.JsonObject
-
 import javax.servlet.{ ServletRequest, ServletResponse }
 import javax.servlet.http.HttpServlet
+import org.openurp.ws.services.teach.attendance.app.impl.DataImporter
+import java.util.Calendar
 /**
  * 滚动的通知公告
  * FIXME 未实现
@@ -29,6 +29,8 @@ class NoticeServlet extends HttpServlet with Logging {
     rs.add("devid", devid)
     rs.add("classname", "").add("msgtype", 1)
     rs.add("msg", "").add("msgdata", "")
+    
+    
     render(res, rs.mkJson)
   }
 

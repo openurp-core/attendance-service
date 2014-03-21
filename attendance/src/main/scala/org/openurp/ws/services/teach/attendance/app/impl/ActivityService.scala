@@ -23,14 +23,15 @@ class ActivityService extends Logging with Initializing{
     var rs: Option[ActivityBean] = None
     
     baseDataService.getSemesterId(date) foreach { semesterId =>
-      val datas = executor.query("select al.id from t_attend_activities  al " +
-        "where al.semester_id =? and to_char(al.course_date,'yyyyMMdd')=? and ? between al.begin_time and al.end_time and al.room_id=?",
+      val datas = executor.query("select aa.id from t_attend_activities  aa " +
+        " where aa.semester_id =? and to_char(aa.course_date,'yyyyMMdd')=? and ? between aa.attend_begin_time and aa.end_time and aa.room_id=?",
         semesterId, toDateStr(date), toCourseTime(date), room.id)
       datas.foreach { data =>
         val activityId = data.head.asInstanceOf[Number].longValue
         rs = cache.get(activityId)
         if (rs.isEmpty) {
-          val datas = executor.query("select al.id,al.lesson_id,al.course_id,al.class_name,al.begin_time,al.end_time from t_attend_activities  al where al.id=?", activityId)
+          val datas = executor.query("select aa.id,aa.lesson_id,aa.course_id,rw.jxbmc class_name,aa.begin_time,aa.end_time "+
+              "from t_attend_activities  aa,jxrw_t rw where aa.id=? and aa.lesson_id=rw.id", activityId)
           datas foreach { data =>
             val activityId = data(0).asInstanceOf[Number].longValue()
             val course = baseDataService.getCourse(data(2).asInstanceOf[Number])

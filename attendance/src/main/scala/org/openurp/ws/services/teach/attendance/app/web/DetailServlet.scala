@@ -14,6 +14,7 @@ import javax.servlet.{ ServletRequest, ServletResponse }
 import javax.servlet.http.HttpServlet
 import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy
 import java.util.Calendar
+import org.openurp.ws.services.teach.attendance.app.util.DesEncryptor
 
 /**
  * 本次考勤的出勤明细
@@ -42,7 +43,7 @@ class DetailServlet extends HttpServlet with Logging {
         activity.foreach { l => classname = l.className }
         val datas = jdbcExecutor.query("select xs.xh,xs.xm,d.signin_at from " + ShardPolicy.detailTableName(now) + " d,xsxx_t xs,t_attend_activities aa where " +
           "d.dev_id=? and to_char(aa.course_date,'yyyyMMdd')=?" +
-          " and ? between aa.begin_time and aa.end_time and xs.id=d.std_id and aa.id=d.activity_id", devid, toDateStr(now.getTime), toCourseTime(now))
+          " and ? between aa.attend_begin_time and aa.end_time and xs.id=d.std_id and aa.id=d.activity_id", devid, toDateStr(now.getTime), toCourseTime(now))
         datas foreach { data =>
           val attendJson = new JsonObject()
           attendJson.addProperty("stuempno", data(0).toString)

@@ -6,6 +6,7 @@ import org.beangle.commons.cache.{ Cache, CacheManager }
 import org.beangle.data.jdbc.query.JdbcExecutor
 import org.openurp.ws.services.teach.attendance.app.util.DateUtils._
 import org.openurp.ws.services.teach.attendance.app.model.CourseBean
+
 class BaseDataService extends Initializing {
   var executor: JdbcExecutor = _
   var cacheManager: CacheManager = _
@@ -13,6 +14,7 @@ class BaseDataService extends Initializing {
   private var semesterCache: Cache[String, Int] = _
   private var courseCache: Cache[Number, CourseBean] = _
   private var teacherCache: Cache[Number, String] = _
+  private var adminclassCache: Cache[Number, String] = _
 
   def getSemesterId(date: Date): Option[Int] = {
     val dateStr = toDateStr(date)
@@ -41,6 +43,21 @@ class BaseDataService extends Initializing {
     teacherName
   }
 
+  def getAdminclassName(id: Number): String = {
+    var adminclassName = ""
+    if (id != null) {
+      var rs = adminclassCache.get(id)
+      if (rs.isEmpty) {
+        val names = executor.query("select a.bjmc from jcxx_bj_t a where a.id=?", id)
+        for (name <- names) {
+          adminclassName = name.head.toString
+          adminclassCache.put(id, adminclassName)
+        }
+      }
+    }
+    adminclassName
+  }
+
   def getCourse(id: Number): Option[CourseBean] = {
     var rs = courseCache.get(id)
     if (rs.isEmpty) {
@@ -48,7 +65,7 @@ class BaseDataService extends Initializing {
       for (name <- names) {
         val course = new CourseBean(name(0).asInstanceOf[Number].longValue, name(1).toString, name(2).toString)
         courseCache.put(id, course)
-        rs =Some(course)
+        rs = Some(course)
       }
     }
     rs
@@ -58,5 +75,6 @@ class BaseDataService extends Initializing {
     semesterCache = cacheManager.getCache("semester")
     courseCache = cacheManager.getCache("course")
     teacherCache = cacheManager.getCache("teacher")
+    adminclassCache = cacheManager.getCache("adminclass")
   }
 }

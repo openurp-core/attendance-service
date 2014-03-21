@@ -142,7 +142,12 @@ class IntegerTransformer extends Transformer {
 
 class ConverterTransformer(val resultType: Class[_], conversion: Conversion, msg: String = "错误的数据格式") extends Transformer {
   def transform(value: String): TransformerResult = {
-    val rs = conversion.convert(value, resultType)
+    var rs: Any = null
+    try {
+      rs = conversion.convert(value, resultType)
+    } catch {
+      case e: Exception =>
+    }
     new TransformerResult(rs, if (null == rs) msg + ":" + value else null)
   }
 }

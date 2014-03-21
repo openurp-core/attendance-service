@@ -13,11 +13,16 @@ import org.beangle.commons.lang.time.Stopwatch
  * Decryptor based on DES
  */
 final class DesDecryptor(val key: String) {
-  def decrypt(message: String): String = new String(cipher.doFinal((hexToBytes(message))), "UTF-8")
+  val desKeySpec = new DESKeySpec(key.getBytes("UTF-8"))
+  val deskey = SecretKeyFactory.getInstance("DES").generateSecret(desKeySpec)
+  val paramKeySpec = new IvParameterSpec(key.getBytes("UTF-8"))
 
-  private val cipher = Cipher.getInstance("DES/CBC/PKCS5Padding")
-  cipher.init(Cipher.DECRYPT_MODE, SecretKeyFactory.getInstance("DES").generateSecret(new DESKeySpec(key.getBytes("UTF-8"))),
-    new IvParameterSpec(key.getBytes("UTF-8")))
+  def decrypt(message: String): String = {
+    //不能使用在多线程环境中,每次解密时创建一个
+    val cipher = Cipher.getInstance("DES/CBC/PKCS5Padding")
+    cipher.init(Cipher.DECRYPT_MODE, deskey, paramKeySpec)
+    new String(cipher.doFinal((hexToBytes(message))), "UTF-8")
+  }
 
   private def hexToBytes(str: String): Array[Byte] = {
     if (str == null || str.equals("")) null

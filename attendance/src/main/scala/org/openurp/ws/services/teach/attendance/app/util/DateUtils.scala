@@ -35,7 +35,13 @@ object DateUtils {
     if (date == null) null
     else datetimeFormat.format(date);
   }
-
+  
+  def toCalendar(dateStr: String): Calendar = {
+    val cal = Calendar.getInstance()
+    cal.setTime(java.sql.Date.valueOf(dateStr))
+    cal
+  }
+  
   def join(date: java.sql.Date, time: java.sql.Time): Calendar = {
     val cal = Calendar.getInstance()
     cal.setTime(date)
@@ -51,13 +57,13 @@ object DateUtils {
     val min = String.valueOf(time.get(Calendar.MINUTE))
     toInt(leftPad(hour, 2, '0') + leftPad(min, 2, '0'))
   }
-  
+
   def toCourseTime(time: java.util.Date): Int = {
     val cal = Calendar.getInstance
     cal.setTime(time)
     toCourseTime(cal)
   }
-  
+
   def toTimeStr(time: Int): String = {
     val t = leftPad(String.valueOf(time), 4, '0')
     return t.substring(0, 2) + ":" + t.substring(2)

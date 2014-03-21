@@ -57,7 +57,7 @@ class RateServlet extends HttpServlet with Logging {
         val datas = jdbcExecutor.query("select count(*),count(case when attend_type_id<>2 then 1 else 0 end) from " + detailTableName(now) +
           " d,t_attend_activities a where a.id=d.activity_id and d.dev_id=?" +
           " and to_char(a.course_date,'yyyyMMdd')=? " +
-          " and ? between a.begin_time and a.end_time", devid, toDateStr(now.getTime()), toCourseTime(now))
+          " and ? between a.attend_begin_time and a.end_time", devid, toDateStr(now.getTime()), toCourseTime(now))
         datas.foreach { data =>
           totlenum = data(0).asInstanceOf[Number].intValue()
           attendnum = data(1).asInstanceOf[Number].intValue()
