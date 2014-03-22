@@ -16,16 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openurp.ws.services.teach.attendance.app.model
+package org.openurp.ws.services.teach.attendance.app.util
 
-import org.beangle.commons.lang.Objects
-/**
- * 课程信息
- *
- * @author chaostone
- * @version 1.0, 2014/03/22
- * @since 1.0
- */
-class CourseBean(val id: Long, val code: String, val name: String) {
-  override def toString(): String = Objects.toStringBuilder(this).add("id", id).add("code", code).add("name", name).toString
+import java.util.Calendar
+import org.junit.runner.RunWith
+import org.openurp.ws.services.teach.attendance.app.util.DateUtils._
+import org.scalatest.FunSpec
+import org.scalatest.junit.JUnitRunner
+import org.beangle.commons.lang.Dates
+
+@RunWith(classOf[JUnitRunner])
+class DateUtilsTest extends FunSpec {
+  describe("DateUtils") {
+    it("format") {
+      val sqlDate = java.sql.Date.valueOf("2009-03-06")
+      println(toDateTimeStr(sqlDate))
+      println(toDateTimeStr(Dates.toDate(Calendar.getInstance)))
+    }
+    it("toCourseTime") {
+      println(toCourseTime(Dates.now))
+    }
+  }
 }

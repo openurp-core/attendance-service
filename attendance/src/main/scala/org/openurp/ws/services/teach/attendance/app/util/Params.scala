@@ -1,14 +1,38 @@
+/*
+ * OpenURP, Open University Resouce Planning
+ *
+ * Copyright (c) 2013-2014, OpenURP Software.
+ *
+ * OpenURP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * OpenURP is distributed in the hope that it will be useful.
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.openurp.ws.services.teach.attendance.app.util
 
+import java.sql.{ Date, Time }
 import java.{ util => ju }
-import org.beangle.commons.conversion.converter.StringConverterFactory
+import org.beangle.commons.conversion.Conversion
 import org.beangle.commons.conversion.impl.DefaultConversion
 import org.beangle.commons.lang.Numbers
 import org.beangle.commons.lang.Strings.isEmpty
-import javax.servlet.ServletRequest
-import org.beangle.commons.conversion.Conversion
-import java.sql.{ Time, Date }
 
+import javax.servlet.ServletRequest
+/**
+ * 参数工具类
+ *
+ * @author chaostone
+ * @version 1.0, 2014/03/22
+ * @since 1.0
+ */
 final object Params {
   class ParamOption() {
     val required = new collection.mutable.HashSet[String]
@@ -57,7 +81,7 @@ final object Params {
     }
     option.optional.foreach { name =>
       val values = params.get(name)
-      if (null != values && values.isEmpty) {
+      if (null != values && !values.isEmpty) {
         datas.put(name, values)
       }
     }
@@ -158,7 +182,7 @@ final class Result(val failCount: Int, val msg: collection.Map[String, String], 
   def apply[U](name: String): U = datas(name).asInstanceOf[U]
 
   @inline
-  def get(name: String): Option[Any] = datas.get(name)
+  def get[U](name: String): Option[U] = datas.get(name).asInstanceOf[Option[U]]
 
   @inline
   def ok: Boolean = failCount == 0

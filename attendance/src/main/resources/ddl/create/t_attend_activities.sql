@@ -16,5 +16,9 @@ comment on column t_attend_activities.end_time is '上课结束时间';
 comment on column t_attend_activities.room_id is '教室ID';
 comment on column t_attend_activities.course_hours is '课时';
 
+
 create index idx_attend_activity_room on t_attend_activities(room_id);
 create index idx_attend_activity_lesson on t_attend_activities(lesson_id);
+create index idx_attend_activity_date on t_attend_activities(course_date);
+create index idx_attend_activity_date_room on t_attend_activities(course_date,room_id);
+

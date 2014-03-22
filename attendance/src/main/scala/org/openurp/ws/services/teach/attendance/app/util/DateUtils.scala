@@ -1,10 +1,37 @@
+/*
+ * OpenURP, Open University Resouce Planning
+ *
+ * Copyright (c) 2013-2014, OpenURP Software.
+ *
+ * OpenURP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * OpenURP is distributed in the hope that it will be useful.
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.openurp.ws.services.teach.attendance.app.util
 
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Calendar
-import org.beangle.commons.lang.Strings._
-import org.beangle.commons.lang.Numbers._
+import java.{ util => ju }
+import java.util.Calendar.{ HOUR_OF_DAY, MINUTE }
+
+import org.beangle.commons.lang.Dates
+import org.beangle.commons.lang.Numbers.toInt
+import org.beangle.commons.lang.Strings.leftPad
+/**
+ * 日期时间工具类
+ *
+ * @author chaostone
+ * @version 1.0, 2014/03/22
+ * @since 1.0
+ */
 object DateUtils {
 
   val dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -16,7 +43,7 @@ object DateUtils {
    *  @param date
    *  @return
    */
-  def toDateStr(date: Date = new Date()): String = {
+  def toDateStr(date: ju.Date = new ju.Date()): String = {
     return dateFormat.format(date);
   }
 
@@ -26,43 +53,23 @@ object DateUtils {
    *  @param date
    *  @return
    */
-  def toTimeStr(date: Date = new Date()): String = {
+  def toTimeStr(date: ju.Date = new ju.Date()): String = {
     if (date == null) null
     else timeFormat.format(date);
   }
 
-  def toDateTimeStr(date: Date = new Date()): String = {
+  def toDateTimeStr(date: ju.Date = new ju.Date()): String = {
     if (date == null) null
     else datetimeFormat.format(date);
   }
-  
-  def toCalendar(dateStr: String): Calendar = {
-    val cal = Calendar.getInstance()
-    cal.setTime(java.sql.Date.valueOf(dateStr))
-    cal
-  }
-  
-  def join(date: java.sql.Date, time: java.sql.Time): Calendar = {
-    val cal = Calendar.getInstance()
-    cal.setTime(date)
-    cal.set(Calendar.HOUR_OF_DAY, time.getHours)
-    cal.set(Calendar.MINUTE, time.getMinutes)
-    cal.set(Calendar.SECOND, 0)
-    cal
-  }
 
-  //FIXME with out Test
-  def toCourseTime(time: java.util.Calendar): Int = {
-    val hour = String.valueOf(time.get(Calendar.HOUR_OF_DAY))
-    val min = String.valueOf(time.get(Calendar.MINUTE))
+  def toCourseTime(time: ju.Calendar): Int = {
+    val hour = String.valueOf(time.get(HOUR_OF_DAY))
+    val min = String.valueOf(time.get(MINUTE))
     toInt(leftPad(hour, 2, '0') + leftPad(min, 2, '0'))
   }
 
-  def toCourseTime(time: java.util.Date): Int = {
-    val cal = Calendar.getInstance
-    cal.setTime(time)
-    toCourseTime(cal)
-  }
+  def toCourseTime(time: ju.Date): Int = toCourseTime(Dates.toCalendar(time))
 
   def toTimeStr(time: Int): String = {
     val t = leftPad(String.valueOf(time), 4, '0')

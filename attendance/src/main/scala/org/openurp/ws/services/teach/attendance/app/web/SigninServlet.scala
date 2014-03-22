@@ -1,17 +1,34 @@
+/*
+ * OpenURP, Open University Resouce Planning
+ *
+ * Copyright (c) 2013-2014, OpenURP Software.
+ *
+ * OpenURP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * OpenURP is distributed in the hope that it will be useful.
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.openurp.ws.services.teach.attendance.app.web
 
 import java.util.Calendar
 
-import scala.annotation.migration
-
+import org.beangle.commons.lang.Dates.join
+import org.beangle.commons.lang.Strings.concat
 import org.beangle.commons.lang.time.Stopwatch
 import org.beangle.commons.logging.Logging
-import org.beangle.commons.lang.Strings._
 import org.openurp.ws.services.teach.attendance.app.impl.SigninService
 import org.openurp.ws.services.teach.attendance.app.model.SigninBean
 import org.openurp.ws.services.teach.attendance.app.util.{ JsonBuilder, Params }
 import org.openurp.ws.services.teach.attendance.app.util.Consts.{ CardId, DeviceId, Rule, SigninDate, SigninTime }
-import org.openurp.ws.services.teach.attendance.app.util.DateUtils.{ join, toDateStr, toTimeStr }
+import org.openurp.ws.services.teach.attendance.app.util.DateUtils.{ toDateStr, toTimeStr }
 import org.openurp.ws.services.teach.attendance.app.util.Render.render
 
 import com.google.gson.JsonObject
@@ -20,6 +37,10 @@ import javax.servlet.{ ServletRequest, ServletResponse }
 import javax.servlet.http.HttpServlet
 /**
  * 刷卡签到服务
+ *
+ * @author chaostone
+ * @version 1.0, 2014/03/22
+ * @since 1.0
  */
 class SigninServlet extends HttpServlet with Logging {
   var signinService: SigninService = _
