@@ -24,7 +24,7 @@ import java.sql.{ Date, Time }
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 object Consts {
   /**设备ID*/

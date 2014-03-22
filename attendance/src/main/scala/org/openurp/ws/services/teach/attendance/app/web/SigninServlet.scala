@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServlet
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class SigninServlet extends HttpServlet with Logging {
   var signinService: SigninService = _

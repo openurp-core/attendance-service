@@ -37,7 +37,7 @@ import org.beangle.commons.lang.Objects
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class ActivityBean(val id: Long, val course: CourseBean, val teacherName: String, val className: String, val courseDate: Date, val beginTime: Int, val endTime: Int, val attendBeginTime: Int) {
 

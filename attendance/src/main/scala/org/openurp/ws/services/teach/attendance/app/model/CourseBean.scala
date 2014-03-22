@@ -24,7 +24,7 @@ import org.beangle.commons.lang.Objects
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class CourseBean(val id: Long, val code: String, val name: String) {
   override def toString(): String = Objects.toStringBuilder(this).add("id", id).add("code", code).add("name", name).toString

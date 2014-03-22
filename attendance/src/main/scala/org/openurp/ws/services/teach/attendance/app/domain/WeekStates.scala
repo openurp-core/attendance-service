@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Strings.repeat
  * 周状态构建对象（兼容原有系统的方式）
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 object WeekStates {
   def build(date: Date): (Int, List[(Int, Long, String)]) = {

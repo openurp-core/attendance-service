@@ -29,7 +29,7 @@ import javax.crypto.spec.{ DESKeySpec, IvParameterSpec }
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 final class DesDecryptor(val key: String) {
   val desKeySpec = new DESKeySpec(key.getBytes("UTF-8"))
@@ -67,7 +67,7 @@ final class DesDecryptor(val key: String) {
  * Encryptor Based on DES
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 final class DesEncryptor(val key: String) {
 

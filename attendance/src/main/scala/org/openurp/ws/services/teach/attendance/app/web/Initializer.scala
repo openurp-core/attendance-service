@@ -31,7 +31,7 @@ import javax.servlet.DispatcherType.REQUEST
  * 
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class Initializer extends org.beangle.commons.web.init.Initializer {
 

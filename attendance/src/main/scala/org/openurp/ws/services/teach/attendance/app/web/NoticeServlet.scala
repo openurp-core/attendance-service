@@ -34,7 +34,7 @@ import java.util.Calendar
  * 
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class NoticeServlet extends HttpServlet with Logging {
   var signinService: SigninService = _

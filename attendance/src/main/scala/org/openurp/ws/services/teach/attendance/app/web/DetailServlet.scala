@@ -40,7 +40,7 @@ import java.sql.Time
  * 
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class DetailServlet extends HttpServlet with Logging {
   var deviceRegistry: DeviceRegistry = _

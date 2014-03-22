@@ -30,7 +30,7 @@ import org.openurp.ws.services.teach.attendance.app.web.{ ActivityServlet, Cours
  * 
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class DefaultModule extends AbstractBindModule {
 

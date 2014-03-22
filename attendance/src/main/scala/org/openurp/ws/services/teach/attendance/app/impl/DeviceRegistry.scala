@@ -30,7 +30,7 @@ import org.openurp.ws.services.teach.attendance.app.model.{ Classroom, Device }
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class DeviceRegistry extends Initializing with Logging {
   var executor: JdbcExecutor = _

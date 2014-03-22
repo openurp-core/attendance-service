@@ -26,7 +26,7 @@ import org.beangle.commons.lang.Objects
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class Device(val id: Int, val room: Classroom, var syncAt: ju.Date = null) {
   override def toString: String = {
@@ -39,7 +39,7 @@ class Device(val id: Int, val room: Classroom, var syncAt: ju.Date = null) {
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class Classroom(val id: Int, val name: String) {
   override def toString(): String = Objects.toStringBuilder(this).add("id", id).add("name", name).toString

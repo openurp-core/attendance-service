@@ -27,7 +27,7 @@ import org.openurp.ws.services.teach.attendance.app.util.DateUtils
  *
  * @author chaostone
  * @version 1.0, 2014/03/22
- * @since 1.0
+ * @since 0.0.1
  */
 class SigninBean(val devId: Int, val cardId: String, val signinAt: ju.Date, val params: String) {
   override def toString(): String = {
