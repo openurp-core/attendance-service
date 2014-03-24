@@ -1,6 +1,6 @@
 create table t_attend_activities (id number(19), semester_id number(19) not null,lesson_id number(19) not null,
-course_id number(19) not null,course_date date,attend_begin_time number(5) not null,begin_time number(5) not null,end_time number(5) not null,
-room_id number(19) not null,course_hours number(5) not null);
+course_id number(10) not null,course_date date,attend_begin_time number(5) not null,begin_time number(5) not null,end_time number(5) not null,
+room_id number(10) not null,course_hours number(5) not null);
 
 create sequence seq_t_attend_activities;
 

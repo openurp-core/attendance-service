@@ -37,7 +37,7 @@ import java.sql.Time
 
 /**
  * 本次考勤的出勤明细
- * 
+ *
  * @author chaostone
  * @version 1.0, 2014/03/22
  * @since 0.0.1
@@ -66,15 +66,20 @@ class DetailServlet extends HttpServlet with Logging {
         val activity = activityService.getActivity(device.room, join(signinDate, signinTime))
         activity.foreach { l => classname = l.className }
         val datas = jdbcExecutor.query("select xs.xh,xs.xm,d.signin_at from " + ShardPolicy.detailTableName(signinDate) + " d,xsxx_t xs,t_attend_activities aa where " +
-          " d.dev_id=? and aa.course_date = ?" +
-          " and ? between aa.attend_begin_time and aa.end_time and xs.id=d.std_id and aa.id=d.activity_id", devid, signinDate, toCourseTime(signinTime))
+          " aa.room_id=? and aa.course_date = ?" +
+          " and ? between aa.attend_begin_time and aa.end_time and xs.id=d.std_id and aa.id=d.activity_id order by d.signin_at desc", device.room.id, signinDate, toCourseTime(signinTime))
         datas foreach { data =>
           val attendJson = new JsonObject()
           attendJson.addProperty("stuempno", data(0).toString)
           attendJson.addProperty("custname", data(1).toString)
           val signinAt = data(2).asInstanceOf[ju.Date]
-          attendJson.addProperty("signindate", toDateStr(signinAt))
-          attendJson.addProperty("signintime", toTimeStr(signinAt))
+          if (null != signinAt) {
+            attendJson.addProperty("signindate", toDateStr(signinAt))
+            attendJson.addProperty("signintime", toTimeStr(signinAt))
+          } else {
+            attendJson.addProperty("signindate", "")
+            attendJson.addProperty("signintime", "")
+          }
           array.add(attendJson)
         }
       }

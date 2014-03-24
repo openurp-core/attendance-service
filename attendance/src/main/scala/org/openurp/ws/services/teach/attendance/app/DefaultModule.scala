@@ -46,7 +46,7 @@ class DefaultModule extends AbstractBindModule {
     bind("app.notice", classOf[NoticeServlet])
     bind("app.importer", classOf[ImporterServlet])
 
-    bind("dataSource", classOf[JndiObjectFactory]).property("jndiName", "jdbc/teach").property("resourceRef", "true")
+    bind("dataSource", classOf[JndiObjectFactory]).property("jndiName", "jdbc/ws-services-teach-attendance").property("resourceRef", "true")
     bind(classOf[JdbcExecutor]).constructor(ref("dataSource")) //.property("showSql", "true")
     bind(classOf[DeviceRegistry])
     bind(classOf[EhcacheManager])

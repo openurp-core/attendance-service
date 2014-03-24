@@ -64,7 +64,9 @@ class RateServlet extends HttpServlet with Logging {
       devid = params(DeviceId)
       val signinDate: Date = params.get(SigninDate).getOrElse(today)
       val signinTime: Time = params.get(SigninTime).getOrElse(new Time(now.getTime))
+      var roomId: Int = 0
       deviceRegistry.get(devid) foreach { device =>
+        roomId = device.room.id
         activityService.getActivity(device.room, join(signinDate, signinTime)) foreach { l =>
           className = l.className
         }
@@ -74,9 +76,9 @@ class RateServlet extends HttpServlet with Logging {
         retmsg = "该时间没有课程"
       } else {
         // 根据教室id,考勤时间来获取该教室已打卡人数
-        val datas = jdbcExecutor.query("select count(*),count(case when attend_type_id<>" + AttendType.Absenteeism + " then 1 else 0 end) from " + detailTableName(signinDate) +
-          " d,t_attend_activities a where a.id=d.activity_id and d.dev_id= ? " +
-          " and a.course_date = ? and ? between a.attend_begin_time and a.end_time", devid, signinDate, toCourseTime(signinTime))
+        val datas = jdbcExecutor.query("select count(*),sum(case when attend_type_id<>" + AttendType.Absenteeism + " then 1 else 0 end) from " + detailTableName(signinDate) +
+          " d,t_attend_activities a where a.id=d.activity_id and a.room_id = ? " +
+          " and a.course_date = ? and ? between a.attend_begin_time and a.end_time", roomId, signinDate, toCourseTime(signinTime))
         datas.foreach { data =>
           totlenum = data(0).asInstanceOf[Number].intValue()
           attendnum = data(1).asInstanceOf[Number].intValue()
