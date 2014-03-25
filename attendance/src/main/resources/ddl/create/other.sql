@@ -1,1 +1,0 @@
-create sequence seq_t_attend_details;

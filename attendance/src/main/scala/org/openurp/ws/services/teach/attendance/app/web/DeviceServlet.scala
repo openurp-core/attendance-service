@@ -40,7 +40,6 @@ class DeviceServlet extends HttpServlet with Logging {
   var deviceRegistry: DeviceRegistry = _
 
   override def service(req: ServletRequest, res: ServletResponse) {
-
     val devices = deviceRegistry.loadAll()
     val json = new JsonObject()
     val array = new JsonArray()

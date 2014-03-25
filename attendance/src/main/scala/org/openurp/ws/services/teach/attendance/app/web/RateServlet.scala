@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Strings.isEmpty
 import org.beangle.commons.lang.time.Stopwatch
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy.detailTableName
+import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy._
 import org.openurp.ws.services.teach.attendance.app.impl.{ ActivityService, DeviceRegistry }
 import org.openurp.ws.services.teach.attendance.app.model.AttendType
 import org.openurp.ws.services.teach.attendance.app.util.{ JsonBuilder, Params }
@@ -51,7 +51,6 @@ class RateServlet extends HttpServlet with Logging {
   var deviceRegistry: DeviceRegistry = _
 
   override def service(req: ServletRequest, res: ServletResponse) {
-    val watch = new Stopwatch(true)
     //返回码，总数，出席人数，出勤率
     var retcode, totlenum, attendnum, attendance = 0
     var retmsg, className = ""
@@ -76,8 +75,8 @@ class RateServlet extends HttpServlet with Logging {
         retmsg = "该时间没有课程"
       } else {
         // 根据教室id,考勤时间来获取该教室已打卡人数
-        val datas = jdbcExecutor.query("select count(*),sum(case when attend_type_id<>" + AttendType.Absenteeism + " then 1 else 0 end) from " + detailTableName(signinDate) +
-          " d,t_attend_activities a where a.id=d.activity_id and a.room_id = ? " +
+        val datas = jdbcExecutor.query("select count(*),sum(case when attend_type_id<>" + AttendType.Absenteeism + " then 1 else 0 end) from " + detailTable(signinDate) +
+          " d," + activityTable(signinDate) + " a where a.id=d.activity_id and a.room_id = ? " +
           " and a.course_date = ? and ? between a.attend_begin_time and a.end_time", roomId, signinDate, toCourseTime(signinTime))
         datas.foreach { data =>
           totlenum = data(0).asInstanceOf[Number].intValue()
@@ -93,7 +92,6 @@ class RateServlet extends HttpServlet with Logging {
     rs.add("totlenum", totlenum).add("attendnum", attendnum)
     rs.add("attendnum", attendnum).add("attendance", attendance)
     render(res, rs.mkJson)
-    logger.debug("app.signin using {}", watch)
   }
 
 }

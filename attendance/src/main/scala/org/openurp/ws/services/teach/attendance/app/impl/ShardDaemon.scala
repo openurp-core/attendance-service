@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Strings
 import org.beangle.commons.lang.Strings.{ isNotBlank, replace, split }
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy.{ detailPostfix, logPostfix }
+import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy._
 
 /**
  * 数据分区和导入守护线程
@@ -42,21 +42,21 @@ import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy.{ detailP
 class ShardDaemon extends TimerTask with Logging with Initializing {
   var executor: JdbcExecutor = _
   var importer: DataImporter = _
-  /**每次同步时间*/
-  var firstTime = "15:00"
+  /**每次同步时间,默认不加设置,程序启动时就执行第一次*/
+  var firstTime = ""
 
   /**检查表的时间(每天)*/
   var interval = 24 * (60 * 60 * 1000)
 
-  def checkDetailTable(date: Date) {
-    checkAndCreate("t_attend_details", detailPostfix(date))
+  def checkTable(date: Date) {
+    checkAndCreate(activityPolicy(date))
+    checkAndCreate(detailPolicy(date))
+    checkAndCreate(logPolicy(date))
   }
 
-  def checkLogTable(date: Date) {
-    checkAndCreate("t_attend_logs", logPostfix(date))
-  }
-
-  private def checkAndCreate(table: String, postfix: String) {
+  private def checkAndCreate(policy: Tuple2[String, String]) {
+    val table = policy._1
+    val postfix = policy._2
     val tableName = table + postfix
     // 1.check
     val count = executor.queryForInt("select count(*) from user_tables where table_name='" + tableName.toUpperCase() + "'")
@@ -80,13 +80,11 @@ class ShardDaemon extends TimerTask with Logging with Initializing {
       var date = toDate(tabCal)
       val year = tabCal.get(Calendar.YEAR)
       //检查当月的表
-      checkDetailTable(date)
-      checkLogTable(date)
+      checkTable(date)
 
-      //检查下一个月/下一年的表
+      //检查下一个月
       tabCal.add(Calendar.MONTH, 1)
-      checkDetailTable(date)
-      if (tabCal.get(Calendar.YEAR) != year) checkLogTable(date)
+      checkTable(date)
 
       //导入当天的数据
       val dataCal = Calendar.getInstance()

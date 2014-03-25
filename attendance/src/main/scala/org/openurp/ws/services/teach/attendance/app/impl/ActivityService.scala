@@ -27,7 +27,7 @@ import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
 import org.openurp.ws.services.teach.attendance.app.model.{ ActivityBean, Classroom }
 import org.openurp.ws.services.teach.attendance.app.util.DateUtils.toCourseTime
-
+import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy._
 /**
  * 考勤活动服务
  *
@@ -45,15 +45,15 @@ class ActivityService extends Logging with Initializing {
     var rs: Option[ActivityBean] = None
     val date = toDate(datetime)
     baseDataService.getSemesterId(date) foreach { semesterId =>
-      val datas = executor.query("select aa.id from t_attend_activities  aa " +
+      val datas = executor.query("select aa.id from " + activityTable(date) + "  aa " +
         " where aa.semester_id =? and aa.course_date=? and ? between aa.attend_begin_time and aa.end_time and aa.room_id=?",
         semesterId, date, toCourseTime(datetime), room.id)
       datas.foreach { data =>
         val activityId = data.head.asInstanceOf[Number].longValue
         rs = cache.get(activityId)
         if (rs.isEmpty) {
-          val datas = executor.query("select aa.id,aa.lesson_id,aa.course_id,rw.jxbmc class_name,aa.begin_time,aa.end_time,aa.attend_begin_time" +
-            " from t_attend_activities aa,jxrw_t rw where aa.id=? and aa.lesson_id=rw.id", activityId)
+          val datas = executor.query("select aa.id,aa.lesson_id,aa.course_id,rw.jxbmc class_name,aa.begin_time,aa.end_time,aa.attend_begin_time " +
+            " from " + activityTable(date) + " aa,jxrw_t rw where aa.id=? and aa.lesson_id=rw.id", activityId)
           datas foreach { data =>
             val activityId = data(0).asInstanceOf[Number].longValue()
             val course = baseDataService.getCourse(data(2).asInstanceOf[Number])

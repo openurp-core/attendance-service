@@ -31,22 +31,41 @@ import org.beangle.commons.lang.Dates._
 object ShardPolicy {
 
   /**
+   * 活动表基于年
+   */
+  def activityPolicy(date: Date): (String, String) = ("t_attend_activities", String.valueOf(yearPostfix(date)))
+  /**
    * 日志表按照年进行归档
    */
-  def logTableName(date: Date): String = "t_attend_logs" + logPostfix(date)
+  def logPolicy(date: Date): (String, String) = ("t_attend_logs", String.valueOf(yearPostfix(date)))
 
   /**
    * 考勤表按照月进行归档
    */
-  def detailTableName(date: Date): String = "t_attend_details" + detailPostfix(date)
+  def detailPolicy(date: Date): (String, String) = ("t_attend_details", String.valueOf(yearMonthPostfix(date)))
 
-  def detailPostfix(date: Date): String = {
+  def activityTable(date: Date): String = {
+    val p = activityPolicy(date)
+    p._1 + p._2
+  }
+
+  def logTable(date: Date): String = {
+    val p = logPolicy(date)
+    p._1 + p._2
+  }
+
+  def detailTable(date: Date): String = {
+    val p = detailPolicy(date)
+    p._1 + p._2
+  }
+
+  private def yearMonthPostfix(date: Date): String = {
     val cal = toCalendar(date)
     val year = cal.get(Calendar.YEAR)
     val month = String.valueOf(cal.get(Calendar.MONTH) + 1)
     concat(year, leftPad(month, 2, '0'))
   }
 
-  def logPostfix(date: Date): String = String.valueOf(toCalendar(date).get(Calendar.YEAR))
+  private def yearPostfix(date: Date): String = String.valueOf(toCalendar(date).get(Calendar.YEAR))
 
 }

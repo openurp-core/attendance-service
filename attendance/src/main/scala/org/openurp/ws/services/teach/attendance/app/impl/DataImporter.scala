@@ -22,7 +22,7 @@ import java.sql.Date
 
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy.detailTableName
+import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy._
 import org.openurp.ws.services.teach.attendance.app.domain.WeekStates
 import org.openurp.ws.services.teach.attendance.app.model.AttendType
 import org.openurp.ws.services.teach.attendance.app.util.DateUtils.toDateStr
@@ -47,9 +47,9 @@ class DataImporter extends Logging {
       executor.update("create table " + lockName + "(id number(10))")
       try {
         //具体考勤活动数据
-        val activityCntList = executor.query("select count(*) from t_attend_activities where course_date=?", date)
+        val activityCntList = executor.query("select count(*) from " + activityTable(date) + " where course_date=?", date)
         if (activityCntList.isEmpty || activityCntList.head.head.asInstanceOf[Number].intValue == 0) {
-          val sql = "insert into t_attend_activities(id,semester_id,lesson_id,course_id,course_date,begin_time,end_time,room_id,course_hours,attend_begin_time)" +
+          val sql = "insert into " + activityTable(date) + "(id,semester_id,lesson_id,course_id,course_date,begin_time,end_time,room_id,course_hours,attend_begin_time)" +
             " select seq_t_attend_activities.nextval,rw.jxrlid,rw.id,rw.kcid,to_date(" + toDateStr(date) + ",'yyyyMMdd')," +
             " hd.qssj,hd.jssj,hd.jsid,(hd.jsxj-hd.ksxj+1) ks,to_coursetime(to_minutes(hd.qssj)-15) begin_attend_time from jxrw_t rw ,jxhd_t hd" +
             " where rw.id=hd.jxrwid and hd.zj=? and hd.nf=? and bitand(hd.yxzsz,?)>0 and hd.jsid is not null and hd.zyyy=1"
@@ -60,11 +60,11 @@ class DataImporter extends Logging {
           }
         }
         //上课名单数据
-        val detailCntList = executor.query("select count(*) from " + detailTableName(date) + " d,t_attend_activities aa where d.activity_id=aa.id " +
+        val detailCntList = executor.query("select count(*) from " + detailTable(date) + " d," + activityTable(date) + " aa where d.activity_id=aa.id " +
           " and aa.course_date =?", date)
         if (detailCntList.isEmpty || detailCntList.head.head.asInstanceOf[Number].intValue == 0) {
-          val detailSql = "insert into " + detailTableName(date) + "(id,std_id,activity_id,attend_type_id)" +
-            " select seq_t_attend_details.nextval,jxb.xsid,aa.id," + AttendType.Absenteeism + " from t_attend_activities aa,jxbxs_t jxb" +
+          val detailSql = "insert into " + detailTable(date) + "(id,std_id,activity_id,attend_type_id)" +
+            " select seq_t_attend_details.nextval,jxb.xsid,aa.id," + AttendType.Absenteeism + " from " + activityTable(date) + " aa,jxbxs_t jxb" +
             " where aa.course_date = ? and aa.lesson_id=jxb.jxrwid"
           detailCount = executor.update(detailSql, date)
           logger.info("Importe {} attend details.", detailCount)

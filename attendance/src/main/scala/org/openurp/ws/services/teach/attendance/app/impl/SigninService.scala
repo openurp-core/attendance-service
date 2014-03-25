@@ -23,7 +23,7 @@ import org.beangle.commons.lang.Strings.{ isNotEmpty, replace, substring }
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
 import org.openurp.ws.services.teach.attendance.app.domain.AttendTypePolicy
-import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy.{ detailTableName, logTableName }
+import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy._
 import org.openurp.ws.services.teach.attendance.app.model.{ AttendType, SigninBean }
 import org.openurp.ws.services.teach.attendance.app.util.DateUtils.{ toCourseTime, toDateStr, toTimeStr }
 import org.openurp.ws.services.teach.attendance.app.util.JsonBuilder
@@ -53,8 +53,8 @@ class SigninService extends Logging {
       case Some(device) =>
         try {
           //取出还没有结束的最近的一条记录
-          val datas = executor.query("select d.id,xs.xm,xs.bjid,aa.attend_begin_time,aa.begin_time,aa.end_time,d.attend_type_id from " + detailTableName(signinOn) + " d," +
-            " xsxx_t xs,t_attend_activities aa where xs.id=d.std_id  and aa.id=d.activity_id " +
+          val datas = executor.query("select d.id,xs.xm,xs.bjid,aa.attend_begin_time,aa.begin_time,aa.end_time,d.attend_type_id from " + detailTable(signinOn) + " d," +
+            " xsxx_t xs," + activityTable(signinOn) + " aa where xs.id=d.std_id  and aa.id=d.activity_id " +
             " and aa.course_date = ? and (? <= aa.end_time) and aa.room_id=? and xs.xh=? order by aa.begin_time", signinOn, signinTime, device.room.id, data.cardId)
           if (datas.isEmpty) {
             retmsg = "非本课程学生"
@@ -78,7 +78,7 @@ class SigninService extends Logging {
               if (existTypeId != AttendType.Presence) {
                 val operator = substring(data.cardId + "(" + custname + ")", 0, 30)
                 val updatedAt = now
-                executor.update("update " + detailTableName(signinOn) +
+                executor.update("update " + detailTable(signinOn) +
                   " d set d.attend_type_id=?,d.signin_at=?,d.dev_id=?,d.updated_at=?,d.operator=? where id=?", attendTypeId, signinAt, device.id, updatedAt, operator, signId)
                 retmsg = AttendType.names(attendTypeId)
               } else {
@@ -110,7 +110,7 @@ class SigninService extends Logging {
   }
 
   private def logDB(data: SigninBean, msg: String) {
-    executor.update("insert into " + logTableName(toDate(data.signinAt)) +
+    executor.update("insert into " + logTable(toDate(data.signinAt)) +
       "(dev_id,card_id,signin_at,created_at,params,remark) values(?,?,?,?,?,?)", data.devId, data.cardId, data.signinAt, now, data.params, msg)
   }
 

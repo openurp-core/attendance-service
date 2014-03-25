@@ -41,17 +41,14 @@ class UploadServlet extends HttpServlet with Logging {
   var signinService: SigninService = _
 
   override def service(req: ServletRequest, res: ServletResponse) {
-    val watch = new Stopwatch(true)
     val params = Params.require(DeviceId, CardId, SigninDate, SigninTime).get(req, Rule)
-    val json =
-      if (!params.ok) {
-        new JsonBuilder().add("retcode", -1).mkJson
-      } else {
+    val rs =
+      if (params.ok) {
         val paramStr = concat("&", DeviceId, "=", req.getParameter(DeviceId), "&", CardId, "=", req.getParameter(CardId), "&", SigninDate, "=", req.getParameter(SigninDate), "&", SigninTime, "=", req.getParameter(SigninTime))
         signinService.signin(new SigninBean(params(DeviceId), params(CardId), join(params(SigninDate), params(SigninTime)), paramStr))
-      }
-    res.getWriter().append(json.get("retcode").getAsString())
-    logger.debug("app.signin using {}", watch)
+        0
+      } else -1
+    res.getWriter().append(String.valueOf(rs))
   }
 
 }

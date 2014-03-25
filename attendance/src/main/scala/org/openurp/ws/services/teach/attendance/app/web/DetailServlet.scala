@@ -24,7 +24,7 @@ import org.beangle.commons.lang.Dates.{ today, now, join }
 import org.beangle.commons.lang.time.Stopwatch
 import org.beangle.commons.logging.Logging
 import org.beangle.data.jdbc.query.JdbcExecutor
-import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy
+import org.openurp.ws.services.teach.attendance.app.domain.ShardPolicy._
 import org.openurp.ws.services.teach.attendance.app.impl.{ ActivityService, DeviceRegistry }
 import org.openurp.ws.services.teach.attendance.app.util.Consts.{ DeviceId, SigninDate, SigninTime, Rule }
 import org.openurp.ws.services.teach.attendance.app.util.DateUtils.{ toCourseTime, toDateStr, toTimeStr }
@@ -48,7 +48,6 @@ class DetailServlet extends HttpServlet with Logging {
   var jdbcExecutor: JdbcExecutor = _
 
   override def service(req: ServletRequest, res: ServletResponse) {
-    val watch = new Stopwatch(true)
     var retcode, devid = 0
     var retmsg, classname = ""
     val json = new JsonObject()
@@ -65,7 +64,7 @@ class DetailServlet extends HttpServlet with Logging {
         val signinTime: Time = params.get(SigninTime).getOrElse(new Time(now.getTime))
         val activity = activityService.getActivity(device.room, join(signinDate, signinTime))
         activity.foreach { l => classname = l.className }
-        val datas = jdbcExecutor.query("select xs.xh,xs.xm,d.signin_at from " + ShardPolicy.detailTableName(signinDate) + " d,xsxx_t xs,t_attend_activities aa where " +
+        val datas = jdbcExecutor.query("select xs.xh,xs.xm,d.signin_at from " + detailTable(signinDate) + " d,xsxx_t xs," + activityTable(signinDate) + " aa where " +
           " aa.room_id=? and aa.course_date = ?" +
           " and ? between aa.attend_begin_time and aa.end_time and xs.id=d.std_id and aa.id=d.activity_id order by d.signin_at desc", device.room.id, signinDate, toCourseTime(signinTime))
         datas foreach { data =>
@@ -90,7 +89,6 @@ class DetailServlet extends HttpServlet with Logging {
     json.addProperty("classname", classname)
     json.add("list", array)
     render(res, json)
-    logger.debug("app.signin using {}", watch)
   }
 
 }

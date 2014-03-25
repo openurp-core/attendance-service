@@ -44,7 +44,6 @@ class SyncServlet extends HttpServlet with Logging {
   var deviceRegistry: DeviceRegistry = _
 
   override def service(req: ServletRequest, res: ServletResponse) {
-    val watch = new Stopwatch(true)
     var retcode: Int = -1
     var devid = 0
     var retmsg, room = ""
@@ -72,6 +71,5 @@ class SyncServlet extends HttpServlet with Logging {
     rs.add("retcode", retcode).add("retmsg", retmsg);
     rs.add("classname", room).add("devid", devid).add("serverdate", toDateStr()).add("servertime", toTimeStr())
     Render.render(res, rs)
-    logger.debug("app.synctime using {}", watch)
   }
 }

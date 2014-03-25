@@ -14,4 +14,4 @@ comment on column t_attend_details${postfix}.operator is '操作人';
 comment on column t_attend_details${postfix}.remark is '备注';
 
 create index idx_attend_detail${postfix}_ac on t_attend_details${postfix}(activity_id);
-create index idx_attend_detail${postfix}_std on t_attend_details${postfix}(std_id)
+create index idx_attend_detail${postfix}_std on t_attend_details${postfix}(std_id);
