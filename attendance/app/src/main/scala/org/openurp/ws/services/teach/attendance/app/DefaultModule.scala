@@ -20,6 +20,7 @@ package org.openurp.ws.services.teach.attendance.app
 
 import org.beangle.commons.inject.bind.AbstractBindModule
 import org.beangle.commons.jndi.JndiObjectFactory
+import org.beangle.commons.lang.Strings.{ lowerCase, substringBefore }
 import org.beangle.data.jdbc.query.JdbcExecutor
 import org.openurp.ws.services.teach.attendance.app.domain.AttendTypePolicy
 import org.openurp.ws.services.teach.attendance.app.impl.{ ActivityService, AppConfig, BaseDataService, DataImporter, DeviceRegistry, EhcacheManager, ShardDaemon, SigninService }
@@ -27,7 +28,7 @@ import org.openurp.ws.services.teach.attendance.app.web.{ ActivityServlet, Cours
 
 /**
  * 缺省绑定
- * 
+ *
  * @author chaostone
  * @version 1.0, 2014/03/22
  * @since 0.0.1
@@ -35,16 +36,16 @@ import org.openurp.ws.services.teach.attendance.app.web.{ ActivityServlet, Cours
 class DefaultModule extends AbstractBindModule {
 
   protected def doBinding() {
-    bind("app.sync", classOf[SyncServlet])
-    bind("app.device", classOf[DeviceServlet])
-    bind("app.signin", classOf[SigninServlet])
-    bind("app.coursetable", classOf[CourseTableServlet])
-    bind("app.activity", classOf[ActivityServlet])
-    bind("app.upload", classOf[UploadServlet])
-    bind("app.rate", classOf[RateServlet])
-    bind("app.detail", classOf[DetailServlet])
-    bind("app.notice", classOf[NoticeServlet])
-    bind("app.importer", classOf[ImporterServlet])
+    bindServlet(classOf[SyncServlet])
+    bindServlet(classOf[DeviceServlet])
+    bindServlet(classOf[SigninServlet])
+    bindServlet(classOf[CourseTableServlet])
+    bindServlet(classOf[ActivityServlet])
+    bindServlet(classOf[UploadServlet])
+    bindServlet(classOf[RateServlet])
+    bindServlet(classOf[DetailServlet])
+    bindServlet(classOf[NoticeServlet])
+    bindServlet(classOf[ImporterServlet])
 
     bind("dataSource", classOf[JndiObjectFactory]).property("jndiName", "jdbc/ws-services-teach-attendance").property("resourceRef", "true")
     bind(classOf[JdbcExecutor]).constructor(ref("dataSource")) //.property("showSql", "true")
@@ -55,5 +56,9 @@ class DefaultModule extends AbstractBindModule {
     bind(classOf[ActivityService], classOf[SigninService])
     bind(classOf[AppConfig], classOf[BaseDataService])
     bind(classOf[DataImporter])
+  }
+
+  private def bindServlet(clazz: Class[_]) {
+    bind("app.teach.attendance." + lowerCase(substringBefore(clazz.getSimpleName(), "Servlet")), clazz)
   }
 }
