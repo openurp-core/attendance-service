@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.openurp.ws.services.teach</groupId>
+    <artifactId>openurp-ws-services-teach-attendance-parent</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+  </parent>
+  <artifactId>openurp-ws-services-teach-attendance-app</artifactId>
+  <packaging>war</packaging>
+  <name>OpenURP Teach Attendance App Service</name>
+  
+  <properties>
+    <bundle.symbolicName>org.openurp.ws.services.teach.attendance-app</bundle.symbolicName>
+    <bundle.namespace>org.openurp.ws.services.teach.attendance-app</bundle.namespace>
+    <jta.version>1.1</jta.version>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-core</artifactId>
+      <version>2.6.8</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+      <version>${jta.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>
