@@ -40,9 +40,9 @@ class DeviceRegistry extends Initializing with Logging {
   def get(devid: Int): Option[Device] = {
     var rs = cache.get(devid)
     if (rs.isEmpty) {
-      val rooms = executor.query("select t.id,t.jsmc from  DEVICE_JS dc inner join JCXX_JS_T t on  dc.jsid=t.id  where dc.devid =?", devid)
+      val rooms = executor.query("select t.id,t.jsmc,qdsj from  DEVICE_JS dc inner join JCXX_JS_T t on  dc.jsid=t.id  where dc.devid =?", devid)
       for (room <- rooms) {
-        val device = new Device(devid, new Classroom(room.head.asInstanceOf[Number].intValue(), room(1).toString))
+        val device = new Device(devid, new Classroom(room.head.asInstanceOf[Number].intValue(), room(1).toString),room(2).asInstanceOf[ju.Date])
         logger.info("register device {}", devid)
         cache.put(devid, device)
         rs = Some(device)
