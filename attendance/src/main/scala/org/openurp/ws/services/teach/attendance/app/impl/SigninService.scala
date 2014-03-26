@@ -83,7 +83,7 @@ class SigninService extends Logging {
                 retmsg = AttendType.names(attendTypeId)
               } else {
                 attendTypeId = 0
-                retmsg = "无效,已经出勤"
+                retmsg = "已经出勤"
               }
               logDB(data, "ok")
             }
