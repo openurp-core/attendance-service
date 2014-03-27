@@ -31,6 +31,8 @@ class AttendTypePolicy {
   /**迟到最大值(分钟)*/
   var lateMax: Int = 15
 
+  def calcAttendType(signin: Int, info: SigninInfo): Int = calcAttendType(signin, info.attendBegin, info.begin, info.end)
+
   def calcAttendType(signin: Int, attendBegin: Int, begin: Int, end: Int): Int = {
     //早于考勤考试时间，不算
     if (signin < attendBegin) Unknown
@@ -45,7 +47,6 @@ class AttendTypePolicy {
       else Absenteeism
     }
   }
-
   private def toMinutes(time: Int): Int = {
     var timeStr = String.valueOf(time)
     val time4 = leftPad(timeStr, 4, '0')

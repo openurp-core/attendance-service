@@ -23,7 +23,7 @@ import org.beangle.commons.lang.Strings.concat
 import org.beangle.commons.lang.time.Stopwatch
 import org.beangle.commons.logging.Logging
 import org.openurp.ws.services.teach.attendance.app.impl.SigninService
-import org.openurp.ws.services.teach.attendance.app.model.SigninBean
+import org.openurp.ws.services.teach.attendance.app.domain.SigninData
 import org.openurp.ws.services.teach.attendance.app.util.{ JsonBuilder, Params }
 import org.openurp.ws.services.teach.attendance.app.util.Consts.{ CardId, DeviceId, Rule, SigninDate, SigninTime }
 
@@ -45,7 +45,7 @@ class UploadServlet extends HttpServlet with Logging {
     val rs =
       if (params.ok) {
         val paramStr = concat("&", DeviceId, "=", req.getParameter(DeviceId), "&", CardId, "=", req.getParameter(CardId), "&", SigninDate, "=", req.getParameter(SigninDate), "&", SigninTime, "=", req.getParameter(SigninTime))
-        signinService.signin(new SigninBean(params(DeviceId), params(CardId), join(params(SigninDate), params(SigninTime)), paramStr))
+        signinService.signin(new SigninData(params(DeviceId), params(CardId), join(params(SigninDate), params(SigninTime)), paramStr))
         0
       } else -1
     res.getWriter().append(String.valueOf(rs))

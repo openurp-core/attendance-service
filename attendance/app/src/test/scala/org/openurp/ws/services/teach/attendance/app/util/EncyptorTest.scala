@@ -27,9 +27,9 @@ class EncyptorTest extends FunSpec {
   val key = "abcd1234"
   describe("Encyptor") {
     it("encrypt") {
-      val str1 = new DesEncryptor(key).encrypt("2012126225")
-      val str2 = new DesEncryptor(key).encrypt("20140325")
-      val str3 = new DesEncryptor(key).encrypt("101000")
+      val str1 = new DesEncryptor(key).encrypt("2013121202")
+      val str2 = new DesEncryptor(key).encrypt("20140327")
+      val str3 = new DesEncryptor(key).encrypt("082100")
       println("&cardphyid=" + str1 + "&signindate=" + str2 + "&signintime=" + str3)
     }
 //    it("decrypt") {

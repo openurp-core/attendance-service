@@ -25,6 +25,7 @@ import org.beangle.data.jdbc.query.JdbcExecutor
 import org.openurp.ws.services.teach.attendance.app.domain.AttendTypePolicy
 import org.openurp.ws.services.teach.attendance.app.impl.{ ActivityService, AppConfig, BaseDataService, DataImporter, DeviceRegistry, EhcacheManager, ShardDaemon, SigninService }
 import org.openurp.ws.services.teach.attendance.app.web.{ ActivityServlet, CourseTableServlet, DetailServlet, DeviceServlet, ImporterServlet, NoticeServlet, RateServlet, SigninServlet, SyncServlet, UploadServlet }
+import org.openurp.ws.services.teach.attendance.app.impl.DaySigninCache
 
 /**
  * 缺省绑定
@@ -48,10 +49,10 @@ class DefaultModule extends AbstractBindModule {
     bindServlet(classOf[ImporterServlet])
 
     bind("dataSource", classOf[JndiObjectFactory]).property("jndiName", "jdbc/ws-services-teach-attendance").property("resourceRef", "true")
-    bind(classOf[JdbcExecutor]).constructor(ref("dataSource")) //.property("showSql", "true")
+    bind(classOf[JdbcExecutor]).constructor(ref("dataSource"))//.property("showSql", "true")
     bind(classOf[DeviceRegistry])
     bind(classOf[EhcacheManager])
-    bind(classOf[ShardDaemon]).lazyInit(false)
+    bind(classOf[ShardDaemon],classOf[DaySigninCache]).lazyInit(false)
     bind(classOf[AttendTypePolicy])
     bind(classOf[ActivityService], classOf[SigninService])
     bind(classOf[AppConfig], classOf[BaseDataService])

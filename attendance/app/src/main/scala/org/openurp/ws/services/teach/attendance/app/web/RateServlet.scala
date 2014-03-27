@@ -75,7 +75,7 @@ class RateServlet extends HttpServlet with Logging {
         retmsg = "该时间没有课程"
       } else {
         // 根据教室id,考勤时间来获取该教室已打卡人数
-        val datas = jdbcExecutor.query("select count(*),sum(case when attend_type_id<>" + AttendType.Absenteeism + " then 1 else 0 end) from " + detailTable(signinDate) +
+        val datas = jdbcExecutor.query("select count(*),sum(case when d.signin_at is not null then 1 else 0 end) from " + detailTable(signinDate) +
           " d," + activityTable(signinDate) + " a where a.id=d.activity_id and a.room_id = ? " +
           " and a.course_date = ? and ? between a.attend_begin_time and a.end_time", roomId, signinDate, toCourseTime(signinTime))
         datas.foreach { data =>
