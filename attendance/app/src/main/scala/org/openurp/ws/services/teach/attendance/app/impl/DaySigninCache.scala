@@ -11,6 +11,8 @@ import org.openurp.ws.services.teach.attendance.app.domain.SigninInfo
 import org.beangle.commons.lang.time.Stopwatch
 import org.beangle.commons.logging.Logging
 import org.openurp.ws.services.teach.attendance.app.util.DateUtils
+import java.util.Calendar
+import org.beangle.commons.lang.Strings
 
 object DaySigninCache {
   def find(times: Iterable[Int], begin: Int): Option[Int] = {
@@ -45,8 +47,13 @@ class DaySigninCache extends TimerTask with Initializing with Logging {
   }
 
   def init() {
-    //每天运行数据缓存
-    new Timer("Attenance Day Signin Cache Deamon", true).schedule(this, Dates.now, 24 * (60 * 60 * 1000))
+    //每天运行数据缓存,凌晨6点执行
+    val cal = Calendar.getInstance
+    cal.add(Calendar.DAY_OF_YEAR,1)
+    cal.set(Calendar.HOUR_OF_DAY, 6)
+    cal.set(Calendar.MINUTE, 0)
+    cal.set(Calendar.SECOND, 0)
+    new Timer("Attenance Day Signin Cache Deamon", true).schedule(this, cal.getTime(), 24 * (60 * 60 * 1000))
   }
 
   def run() {
