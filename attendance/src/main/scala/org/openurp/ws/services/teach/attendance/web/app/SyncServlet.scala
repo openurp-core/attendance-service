@@ -79,6 +79,6 @@ class SyncServlet extends HttpServlet with Logging {
     rs.add("retcode", retcode).add("retmsg", retmsg);
     rs.add("classname", room).add("devid", devid).add("serverdate", toDateStr()).add("servertime", toTimeStr())
     Render.render(res, rs)
-    if (watch.elapsedMillis > 50) logger.warn("sync using {}", watch)
+    if (watch.elapsedMillis > 20) logger.warn("sync using {}", watch)
   }
 }
