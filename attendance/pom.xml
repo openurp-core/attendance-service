@@ -6,16 +6,37 @@
     <artifactId>openurp-ws-services-teach-parent</artifactId>
     <version>0.0.2-SNAPSHOT</version>
   </parent>
-  <artifactId>openurp-ws-services-teach-attendance-parent</artifactId>
-  <packaging>pom</packaging>
-  <name>OpenURP Teach Attendance Service Parent</name>
+  <artifactId>openurp-ws-services-teach-attendance</artifactId>
+  <packaging>war</packaging>
+  <name>OpenURP Teach Attendance Service</name>
   
   <properties>
-    <bundle.symbolicName>org.openurp.ws.services.teach.attendance.parent</bundle.symbolicName>
-    <bundle.namespace>org.openurp.ws.services.teach.attendance.parent</bundle.namespace>
+    <bundle.symbolicName>org.openurp.ws.services.teach.attendance</bundle.symbolicName>
+    <bundle.namespace>org.openurp.ws.services.teach.attendance</bundle.namespace>
+    <jta.version>1.1</jta.version>
   </properties>
   
-  <modules>
-    <module>app</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-core</artifactId>
+      <version>2.6.8</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+      <version>${jta.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>
