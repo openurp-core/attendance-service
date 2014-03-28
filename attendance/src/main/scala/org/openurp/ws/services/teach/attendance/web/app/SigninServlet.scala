@@ -55,16 +55,8 @@ class SigninServlet extends HttpServlet with Logging {
       rs.add("signintime", toTimeStr(signinAt.getTime))
       json = rs.mkJson
     } else {
-      val testCode = "2011124148"
-      //       params(CardId)
-      //        params(SigninTime)
-      val signinAt = join(params(SigninDate), params(SigninTime))
-      val cal = Calendar.getInstance()
-      cal.setTime(signinAt)
-      cal.set(Calendar.HOUR_OF_DAY, 8)
-      cal.set(Calendar.MINUTE, 10)
       val paramStr = concat("&", DeviceId, "=", req.getParameter(DeviceId), "&", CardId, "=", req.getParameter(CardId), "&", SigninDate, "=", req.getParameter(SigninDate), "&", SigninTime, "=", req.getParameter(SigninTime))
-      json = signinService.signin(new SigninData(params(DeviceId), testCode, cal.getTime(), paramStr))
+      json = signinService.signin(new SigninData(params(DeviceId), params(CardId), join(params(SigninDate), params(SigninTime)), paramStr))
     }
     render(res, json)
     if (watch.elapsedMillis > 0) logger.warn("signin {} at {} using {}", Array[AnyRef](params.get(CardId).orNull, params.get(DeviceId).orNull, watch))
