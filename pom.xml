@@ -9,7 +9,7 @@
   <groupId>org.openurp.ws.services.teach</groupId>
   <artifactId>openurp-ws-services-teach-parent</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.2</version>
   <name>OpenURP Teach Service Parent</name>
   
   <properties>
