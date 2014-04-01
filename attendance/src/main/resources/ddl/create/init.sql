@@ -1,0 +1,3 @@
+create sequence seq_t_attend_details;
+
+create sequence seq_t_attend_activities;

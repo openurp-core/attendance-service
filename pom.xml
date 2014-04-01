@@ -9,15 +9,15 @@
   <groupId>org.openurp.ws.services.teach</groupId>
   <artifactId>openurp-ws-services-teach-parent</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>OpenURP Teach Service Parent</name>
   
   <properties>
     <bundle.symbolicName>org.openurp.ws.services.teach.parent</bundle.symbolicName>
     <bundle.namespace>org.openurp.ws.services.teach.parent</bundle.namespace>
-    <beangle.commons.version>4.0.3</beangle.commons.version>
-    <beangle.data.version>4.0.3</beangle.data.version>
-    <beangle.spring.version>4.0.1</beangle.spring.version>
+    <beangle.commons.version>4.0.4</beangle.commons.version>
+    <beangle.data.version>4.0.4</beangle.data.version>
+    <beangle.spring.version>4.0.2</beangle.spring.version>
   </properties>
 
   <modules>
