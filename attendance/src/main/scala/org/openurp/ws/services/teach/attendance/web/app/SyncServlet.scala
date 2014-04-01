@@ -57,8 +57,8 @@ class SyncServlet extends HttpServlet with Logging {
         case Some(d) => {
           val now = Dates.now
           //距离上次更新的间隔(s),20秒以内不更新数据库
-          val updateInterval = (now.getTime() - d.syncAt.getTime()) / 1000
-          if (updateInterval > 20) {
+          val updateInterval = if (null == d.syncAt) 20 else (now.getTime() - d.syncAt.getTime()) / 1000
+          if (updateInterval >= 20) {
             d.syncAt = now
             if (executor.update("update DEVICE_JS set qdsj=? where devid=?", Dates.now, devid) < 1) {
               deviceRegistry.unregister(devid)

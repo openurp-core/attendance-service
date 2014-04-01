@@ -7,7 +7,7 @@
     <version>0.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>openurp-ws-services-teach-attendance</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>OpenURP Teach Attendance Service</name>
   
   <properties>

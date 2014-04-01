@@ -28,6 +28,8 @@ class AttendPolicyTest extends FunSpec with Matchers {
   describe("AttendTypePolicy") {
     it("Get or Set property") {
       val policy = new AttendTypePolicy
+      policy.lateMax=15
+      
       assert(policy.calcAttendType(719, 720, 750, 1000) == Unknown)
       assert(policy.calcAttendType(720, 720, 750, 1000) == Presence)
       assert(policy.calcAttendType(750, 720, 750, 1000) == Presence)

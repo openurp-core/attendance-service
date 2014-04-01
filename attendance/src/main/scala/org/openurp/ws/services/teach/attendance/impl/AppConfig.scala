@@ -19,9 +19,9 @@
 package org.openurp.ws.services.teach.attendance.impl
 
 import scala.collection.JavaConversions.propertiesAsScalaMap
-
 import org.beangle.commons.bean.Initializing
 import org.beangle.commons.lang.ClassLoaders
+import org.beangle.commons.lang.Numbers
 /**
  * 应用配置
  *
@@ -41,5 +41,9 @@ class AppConfig extends Initializing {
     is.close()
     properties ++= props
   }
+
+  //默认迟到最大15分钟
+  def lateMax: Int = Numbers.toInt(properties.get("lateMax").getOrElse("15"))
+
   def courseURL: String = properties("courseURL")
 }

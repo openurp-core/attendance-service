@@ -40,6 +40,10 @@ class BaseDataService extends Initializing {
   private var teacherCache: Cache[Number, String] = _
   private var adminclassCache: Cache[Number, String] = _
 
+  def isHoliday(date: Date): Boolean = {
+    !executor.query("select id from holidays d where d.date_on=?", date).isEmpty
+  }
+  
   def getSemesterId(date: Date): Option[Int] = {
     val dateStr = toDateStr(date)
     var rs = semesterCache.get(dateStr)

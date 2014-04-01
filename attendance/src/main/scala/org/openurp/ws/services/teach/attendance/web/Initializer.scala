@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openurp.ws.services.teach.attendance.web.app
+package org.openurp.ws.services.teach.attendance.web
 
 import java.util.EnumSet
 import org.beangle.commons.lang.Strings.replace
@@ -25,6 +25,9 @@ import org.beangle.commons.web.servlet.DelegatingServletProxy
 import org.beangle.spring.web.ContextListener
 import javax.servlet.{ ServletContext, ServletException }
 import javax.servlet.DispatcherType.REQUEST
+import javax.servlet.ServletException
+import org.beangle.commons.web.servlet.DelegatingServletProxy
+import org.beangle.spring.web.ContextListener
 import javax.servlet.ServletException
 import org.beangle.commons.web.servlet.DelegatingServletProxy
 import org.beangle.spring.web.ContextListener
@@ -42,22 +45,21 @@ class Initializer extends org.beangle.commons.web.init.Initializer {
 
   @throws(classOf[ServletException])
   def onStartup(sc: ServletContext) {
-    addServlet(sc, "/sync")
-    addServlet(sc, "/device")
-    addServlet(sc, "/activity")
-    addServlet(sc, "/coursetable")
-    addServlet(sc, "/rate")
-    addServlet(sc, "/signin")
-    addServlet(sc, "/upload")
-    addServlet(sc, "/detail")
-    addServlet(sc, "/notice")
-    addServlet(sc, "/importer")
-    sc.addFilter("characterEncoding", new CharacterEncodingFilter()).addMappingForUrlPatterns(
-      EnumSet.of(REQUEST), true, "/*");
-    sc.addListener(classOf[ContextListener])
+    addServlet(sc, "/app/sync")
+    addServlet(sc, "/app/device")
+    addServlet(sc, "/app/activity")
+    addServlet(sc, "/app/coursetable")
+    addServlet(sc, "/app/rate")
+    addServlet(sc, "/app/signin")
+    addServlet(sc, "/app/upload")
+    addServlet(sc, "/app/detail")
+    addServlet(sc, "/app/notice")
+    addServlet(sc, "/app/importer")
   }
+
   private def addServlet(sc: ServletContext, mapping: String) {
     val prefix = "/teach/attendance"
-    sc.addServlet("app." + replace(prefix + mapping, "/", "."), classOf[DelegatingServletProxy]).addMapping(prefix + mapping)
+    val beanPrefix = "teach.attendance"
+    sc.addServlet(replace(beanPrefix + mapping, "/", "."), classOf[DelegatingServletProxy]).addMapping(prefix + mapping)
   }
 }

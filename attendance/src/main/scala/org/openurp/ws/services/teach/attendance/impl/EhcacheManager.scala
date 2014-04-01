@@ -19,8 +19,8 @@
 package org.openurp.ws.services.teach.attendance.impl
 
 import org.beangle.commons.cache.{ Cache, CacheManager }
-
 import net.sf.ehcache.{ Cache => EHCache, CacheManager => EHCacheManager, Element }
+import org.beangle.commons.lang.ClassLoaders
 /**
  * EHCache 管理器
  *
@@ -30,7 +30,8 @@ import net.sf.ehcache.{ Cache => EHCache, CacheManager => EHCacheManager, Elemen
  */
 class EhcacheManager extends CacheManager {
 
-  val manager = EHCacheManager.create()
+  val manager = EHCacheManager.newInstance(ClassLoaders.getResource("attendance-ehcache.xml", getClass))
+
   /**
    * Return the cache associated with the given name.
    */

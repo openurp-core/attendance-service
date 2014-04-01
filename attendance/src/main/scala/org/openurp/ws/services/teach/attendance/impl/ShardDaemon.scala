@@ -77,14 +77,13 @@ class ShardDaemon extends TimerTask with Logging with Initializing {
   def run() {
     try {
       val tabCal = Calendar.getInstance()
-      var date = toDate(tabCal)
       val year = tabCal.get(Calendar.YEAR)
       //检查当月的表
-      checkTable(date)
+      checkTable(toDate(tabCal))
 
       //检查下一个月
       tabCal.add(Calendar.MONTH, 1)
-      checkTable(date)
+      checkTable(toDate(tabCal))
 
       //导入当天的数据
       val dataCal = Calendar.getInstance()

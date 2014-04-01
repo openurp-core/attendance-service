@@ -20,16 +20,19 @@ package org.openurp.ws.services.teach.attendance.domain
 import org.beangle.commons.lang.Strings.leftPad
 import org.beangle.commons.lang.Numbers.toInt
 import org.openurp.ws.services.teach.attendance.model.AttendType._
+import org.openurp.ws.services.teach.attendance.impl.AppConfig
+import org.beangle.commons.bean.Initializing
 /**
  * 出勤类型策略
  * @author chaostone
  * @version 1.0, 2014/03/22
  * @since 0.0.1
  */
-class AttendTypePolicy {
+class AttendTypePolicy extends Initializing {
 
-  /**迟到最大值(分钟)*/
-  var lateMax: Int = 15
+  var appConfig: AppConfig = _
+  
+  var lateMax: Int = _
 
   def calcAttendType(signin: Int, info: SigninInfo): Int = calcAttendType(signin, info.attendBegin, info.begin, info.end)
 
@@ -51,5 +54,9 @@ class AttendTypePolicy {
     var timeStr = String.valueOf(time)
     val time4 = leftPad(timeStr, 4, '0')
     toInt(time4.substring(0, 2)) * 60 + toInt(time4.substring(2, 4))
+  }
+  
+  def init() {
+    lateMax = appConfig.lateMax
   }
 }
