@@ -59,7 +59,7 @@ class SigninServlet extends HttpServlet with Logging {
       json = signinService.signin(new SigninData(params(DeviceId), params(CardId), join(params(SigninDate), params(SigninTime)), paramStr))
     }
     render(res, json)
-    if (watch.elapsedMillis > 0) logger.warn("signin {} at {} using {}", Array[AnyRef](params.get(CardId).orNull, params.get(DeviceId).orNull, watch))
+    if (watch.elapsedMillis > 50) logger.warn("signin {} at {} using {}", Array[AnyRef](params.get(CardId).orNull, params.get(DeviceId).orNull, watch))
   }
 
 }
